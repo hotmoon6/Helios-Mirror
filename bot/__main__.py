@@ -19,6 +19,19 @@ from .helper.telegram_helper.button_build import ButtonMaker
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror_leech, clone, ytdlp, shell, eval, delete, count, leech_settings, search, rss, bt_select, sleep
 from .helper.ext_utils.telegraph_helper import telegraph
 
+def progress_bar(percentage):
+    p_used = '⬢'
+    p_total = '⬡'
+    if isinstance(percentage, str):
+        return 'NaN'
+    try:
+        percentage=int(percentage)
+    except:
+        percentage = 0
+    return ''.join(
+        p_used if i <= percentage // 10 else p_total for i in range(1, 11)
+    )
+
 def stats(update, context):
     if ospath.exists('.git'):
         last_commit = check_output(["git log -1 --date=short --pretty=format:'%cd <b>From</b> %cr'"], shell=True).decode()
