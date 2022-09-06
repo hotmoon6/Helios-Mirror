@@ -53,18 +53,17 @@ def stats(update, context):
 
 
 def start(update, context):
-    buttons = ButtonMaker()
-    buttons.buildbutton(f"{START_BTN1_NAME}", f"{START_BTN1_URL}")
-    buttons.buildbutton(f"{START_BTN2_NAME}", f"{START_BTN2_URL}")
-    reply_markup = buttons.build_menu(2)
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
+        Pic = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
         start_string = f'''
-This bot can mirror all your links to Google Drive or to telegram!
-Type /{BotCommands.HelpCommand} to get a list of available commands
+Wᴇʟᴄᴏᴍᴇ | Vᴇᴄɴᴀ ɪs ʀᴇᴀᴅʏ ғᴏʀ ʏᴏᴜ !
+ɪ ʜᴀᴠᴇ ᴛʜᴇ Aʙɪʟɪᴛʏ ᴛᴏ ᴍɪʀʀᴏʀ Tᴏʀʀᴇɴᴛ, ʟɪɴᴋs ᴀɴᴅ Uᴘʟᴏᴀᴅ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ Gᴅʀɪᴠᴇ ᴀᴘɪ
+
+Cʀᴇᴀᴛᴏʀ :- Sᴘɪᴅᴇʏ⭐
 '''
-        sendMarkup(start_string, context.bot, update.message, reply_markup)
+        reply_photo(Pic, caption = start_string, context.bot, update.message)
     else:
-        sendMarkup('Not an Authorized user, deploy your own helios-mirror-leech bot', context.bot, update.message, reply_markup)
+        sendMarkup("You're Not an Authorized!", context.bot, update.message)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
@@ -153,7 +152,7 @@ Hei, Need Help!!
 '''
 try:
     help = telegraph.create_page(
-        title='Helios-Mirror Help',
+        title='Help from Vecna',
         content=help_string_telegraph,
     )["path"]
 except Exception as err:
@@ -173,9 +172,9 @@ def main():
                 if ospath.isfile(".restartmsg"):
                     with open(".restartmsg") as f:
                         chat_id, msg_id = map(int, f)
-                    msg = 'Restarted Successfully!'
+                    msg = "It's Time!"
                 else:
-                    msg = 'Bot Restarted!'
+                    msg = "It's Time!"
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):
@@ -202,12 +201,12 @@ def main():
     if ospath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f)
-        bot.edit_message_text("Restarted Successfully!", chat_id, msg_id)
+        bot.edit_message_text("It's Time!", chat_id, msg_id)
         osremove(".restartmsg")
     elif not notifier_dict and AUTHORIZED_CHATS:
         for id_ in AUTHORIZED_CHATS:
             try:
-                bot.sendMessage(id_, "Bot Restarted!", 'HTML')
+                bot.sendMessage(id_, "It's Time!", 'HTML')
             except Exception as e:
                 LOGGER.error(e)
 
