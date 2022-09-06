@@ -5,7 +5,7 @@ from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memo
 from time import time
 from sys import executable
 from telegram.ext import CommandHandler
-
+import random
 from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop, AUTHORIZED_CHATS, app_session, USER_SESSION_STRING, \
     OWNER_ID, SUDO_USERS, START_BTN1_NAME, START_BTN1_URL, START_BTN2_NAME, START_BTN2_URL
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
@@ -54,14 +54,14 @@ def stats(update, context):
 
 def start(update, context):
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
-        Pic = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
+        Pic = ["https://graph.org/file/cbff456bdf713dbc94e77.jpg", "https://graph.org/file/49cf3d82dbf56af26deab.jpg", "https://graph.org/file/9e25a56f41522f8d1dcd6.jpg", "https://graph.org/file/2e179e25dc47dce3eb415.jpg", "https://graph.org/file/d171fa983d64db4e8345b.jpg", "https://graph.org/file/266fded681ee390e59d89.jpg"]
         start_string = f'''
 Wᴇʟᴄᴏᴍᴇ | Vᴇᴄɴᴀ ɪs ʀᴇᴀᴅʏ ғᴏʀ ʏᴏᴜ !
 ɪ ʜᴀᴠᴇ ᴛʜᴇ Aʙɪʟɪᴛʏ ᴛᴏ ᴍɪʀʀᴏʀ Tᴏʀʀᴇɴᴛ, ʟɪɴᴋs ᴀɴᴅ Uᴘʟᴏᴀᴅ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ Gᴅʀɪᴠᴇ ᴀᴘɪ
 
 Cʀᴇᴀᴛᴏʀ :- Sᴘɪᴅᴇʏ⭐
 '''
-        update.message.reply_photo(Pic, caption = start_string)
+        update.message.reply_photo(photo=random.choice(Pic), caption = start_string)
     else:
         sendMarkup("You're Not an Authorized!", context.bot, update.message)
 
