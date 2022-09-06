@@ -138,7 +138,7 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = ""
+        msg = f"Bot of Mindflayer"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
