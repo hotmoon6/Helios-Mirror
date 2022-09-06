@@ -61,7 +61,7 @@ Wᴇʟᴄᴏᴍᴇ | Vᴇᴄɴᴀ ɪs ʀᴇᴀᴅʏ ғᴏʀ ʏᴏᴜ !
 
 Cʀᴇᴀᴛᴏʀ :- Sᴘɪᴅᴇʏ⭐
 '''
-        reply_photo(Pic, caption = start_string, context.bot, update.message)
+        update.message.reply_photo(Pic, caption = start_string)
     else:
         sendMarkup("You're Not an Authorized!", context.bot, update.message)
 
