@@ -137,7 +137,6 @@ def progress_bar(percentage):
 
 def get_readable_message():
     with download_dict_lock:
-        photo = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
         msg = f"<b><i><u>Bot of Mindflayer's Mirror</u></i></b>"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
