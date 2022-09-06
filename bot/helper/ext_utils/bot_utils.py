@@ -168,7 +168,6 @@ def get_readable_message():
                 msg += f" | <b>Time: </b>{download.seeding_time()}"
             else:
                 msg += f"\n<b>Size: </b>{download.size()}"
-            else:
                 msg += ''
             msg += f"\n<b>To Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
             msg += "\n\n"
