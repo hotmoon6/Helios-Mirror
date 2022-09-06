@@ -3,6 +3,8 @@ from threading import Thread, Event
 from time import time
 from math import ceil
 from html import escape
+import psutil
+from psutil import virtual_memory, cpu_percent, disk_usage
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from requests import head as rhead
 from urllib.request import urlopen
@@ -116,10 +118,23 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '▰' * cFull
-    p_str += '▱' * (12 - cFull)
+    p_str = '⬢' * cFull
+    p_str += '⬡' * (12 - cFull)
     p_str = f"[{p_str}]"
     return p_str
+
+def progress_bar(percentage):
+    p_used = '⬢'
+    p_total = '⬡'
+    if isinstance(percentage, str):
+        return '-'
+    try:
+        percentage=int(percentage)
+    except:
+        percentage = 0
+    return ''.join(
+        p_used if i <= percentage // 10 else p_total for i in range(1, 11)
+    )
 
 def get_readable_message():
     with download_dict_lock:
@@ -299,12 +314,17 @@ def pop_up_stats(update, context):
     query = update.callback_query
     stats = bot_sys_stats()
     query.answer(text=stats, show_alert=True)
+
 def bot_sys_stats():
+    currentTime = get_readable_time(time() - botStartTime)
     total, used, free, disk = disk_usage('/')
-    used = get_readable_file_size(used)
-    free = get_readable_file_size(free)
-    sent = get_readable_file_size(net_io_counters().bytes_sent)
-    recv = get_readable_file_size(net_io_counters().bytes_recv)
+    disk_t = get_readable_file_size(total)
+    disk_f = get_readable_file_size(free)
+    memory = virtual_memory()
+    mem_p = memory.percent
+    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
+    sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
+    cpuUsage = cpu_percent(interval=1)
     num_active = 0
     num_upload = 0
     num_split = 0
@@ -337,10 +357,15 @@ def bot_sys_stats():
             elif 'MB/s' in spd:
                 upspeed_bytes += float(spd.split('M')[0]) * 1048576
     stats = f"""
-USED : {used} | FREE :{free}
-SENT : {sent} | RECV : {recv}\n
-DL: {num_active} | UP : {num_upload} | SPLIT : {num_split}
-ZIP : {num_archi} | UNZIP : {num_extract} | TOTAL : {tasks} 
+BOT SYSTEM STATS
+CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
+RAM: {progress_bar(mem_p)} {mem_p}%
+DISK: {progress_bar(disk)} {disk}%
+T: {disk_t} | F: {disk_f}
+Working For: {currentTime}
+T-DL: {recv} | T-UL: {sent}
+
+Made with ❤️ by SPIDEY⭐
 """
     return stats
 dispatcher.add_handler(
