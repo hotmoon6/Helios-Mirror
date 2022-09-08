@@ -21,26 +21,26 @@ PAGE_NO = 1
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "Up.."
-    STATUS_DOWNLOADING = "Down.."
-    STATUS_CLONING = "Cloning.."
+    STATUS_UPLOADING = "Uploading..."
+    STATUS_DOWNLOADING = "Downloading..."
+    STATUS_CLONING = "Cloning..."
     STATUS_WAITING = "Queue"
     STATUS_PAUSED = "Pause"
-    STATUS_ARCHIVING = "Archiving.."
-    STATUS_EXTRACTING = "Extracting.."
+    STATUS_ARCHIVING = "Archiving..."
+    STATUS_EXTRACTING = "Extracting..."
     STATUS_SPLITTING = "Spliting.."
     STATUS_CHECKING = "CheckUp"
-    STATUS_SEEDING = "Seed"
+    STATUS_SEEDING = "Seeding..."
 class EngineStatus:
-    STATUS_ARIA = "Aria2c"
-    STATUS_GD = "Google Api"
-    STATUS_MEGA = "Mega Api"
-    STATUS_QB = "Bittorrent"
-    STATUS_TG = "Pyrogram"
-    STATUS_YT = "YT-dlp"
-    STATUS_EXT = "pExtract"
-    STATUS_SPLIT = "FFmpeg"
-    STATUS_ZIP = "p7zip"
+    STATUS_ARIA = "Aria2c v1.36.0"
+    STATUS_GD = "Google-Api v2.50.0"
+    STATUS_MEGA = "Mega-Api v4.2.0"
+    STATUS_QB = "qBittorrent v4.4.1"
+    STATUS_TG = "Pyrogram v2.0.50"
+    STATUS_YT = "YT-dlp v2022.05.18"
+    STATUS_EXT = "pExtract v0.3"
+    STATUS_SPLIT = "FFmpeg v4.1.9"
+    STATUS_ZIP = "P7zip v17.04"
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -146,8 +146,8 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"\n\n\n<b>File Name:</b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n\n<b>Status:</b> <i>{download.status()}</i> <b>Using:</b> {download.eng()}"
+            msg += f"\n<b>File Name:</b> <code>{escape(str(download.name()))}</code>"
+            msg += f"\n<b>Status:</b> <i>{download.status()}</i> \n<b>Engine:</b> {download.eng()}"
             if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
                 msg += f"\n<b>{get_progress_bar_string(download)}</b> ↣ <code>{download.progress()}</code>"
                 msg += f"\n<b>Downloaded:</b> <code>{get_readable_file_size(download.processed_bytes())}</code> of <code>{download.size()}</code>"
@@ -196,7 +196,7 @@ def get_readable_message():
                     up_speed += float(spd.split('K')[0]) * 1024
                 elif 'M' in spd:
                     up_speed += float(spd.split('M')[0]) * 1048576
-        bmsg = f"\n<b>_______________________________</b>"
+        bmsg = f"\n★━━━━━━━━━━━━━━━━━━━━━━━━★"
         bmsg += f"\n<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
         bmsg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - botStartTime)}"
         bmsg += f"\n<b>DL:</b> {get_readable_file_size(dl_speed)}/s | <b>UL:</b> {get_readable_file_size(up_speed)}/s"
