@@ -29,3 +29,5 @@ tgCrypto
 xattr
 yt-dlp
 telegraph
+itertools
+aiohttp
