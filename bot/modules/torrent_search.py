@@ -25,8 +25,8 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
 from bot import app, bot, LOGGER 
-from bot.helpers.bot_commands import BotCommands
-from bot.helpers.filters import CustomFilters
+from bot.helper.telegram_helper.bot_commands import BotCommands
+from bot.helper.telegram_helper.filters import CustomFilters
 
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
