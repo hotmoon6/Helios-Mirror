@@ -24,9 +24,9 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 
-from bot import app, dispatcher, bot, LOGGER 
-from bot.helper.telegram_helper.bot_commands import BotCommands
-from bot.helper.telegram_helper.filters import CustomFilters
+from tobrot import app, bot, LOGGER 
+from tobrot.helper_funcs.bot_commands import BotCommands
+from tobrot.helper_funcs.filters import CustomFilters
 
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
@@ -96,14 +96,12 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaasi', f'nyaasi@{bot.username}']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebei', f'sukebei@{bot.username}']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -123,12 +121,10 @@ async def init_search(client, message, query, sukebei):
         ]))
         message_info[(reply.chat.id, reply.id)] = message.from_user.id, ttl, query, 1, pages, sukebei
 
-@app.on_callback_query(callback_data('nyaa_nop'))
 async def nyaa_nop(client, callback_query):
     await callback_query.answer(cache_time=3600)
 
 callback_lock = asyncio.Lock()
-@app.on_callback_query(callback_data(['nyaa_back', 'nyaa_next']))
 async def nyaa_callback(client, callback_query):
     message = callback_query.message
     message_identifier = (message.chat.id, message.id)
@@ -189,11 +185,11 @@ class TorrentSearch:
         self.command = command
         self.source = source.rstrip('/')
         self.RESULT_STR = result_str
-
-        app.add_handler(MessageHandler(self.find, filters.command([command, f'{self.command}@{bot.username}'])))
-        app.add_handler(CallbackQueryHandler(self.previous, filters.regex(f"{self.command}_previous")))
-        app.add_handler(CallbackQueryHandler(self.delete, filters.regex(f"{self.command}_delete")))
-        app.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
+        for a in app:
+            a.add_handler(MessageHandler(self.find, filters.command([command, f'{self.command}@{bot.username}'])))
+            a.add_handler(CallbackQueryHandler(self.previous, filters.regex(f"{self.command}_previous")))
+            a.add_handler(CallbackQueryHandler(self.delete, filters.regex(f"{self.command}_delete")))
+            a.add_handler(CallbackQueryHandler(self.next, filters.regex(f"{self.command}_next")))
         
     @staticmethod
     def format_magnet(string: str):
@@ -232,7 +228,7 @@ class TorrentSearch:
 
         res_lim = min(self.RESULT_LIMIT, len(self.response) - self.RESULT_LIMIT*self.index)
         result = f"**Page - {self.index+1}**\n\n"
-        result += "\n\n≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡\n\n".join(
+        result += "\n\n▱▰▱▰▱▰▱▰▱▰▱▰▱▰\n\n".join(
             self.get_formatted_string(self.response[self.response_range[self.index]+i])
             for i in range(res_lim)
         )
@@ -242,6 +238,7 @@ class TorrentSearch:
             result,
             reply_markup=InlineKeyboardMarkup([inline]),
             parse_mode=enums.ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
         )
 
     async def find(self, client, message):
@@ -283,9 +280,9 @@ class TorrentSearch:
         await self.update_message()
 
 RESULT_STR_1337 = (
-    "✘Name: `{Name}`\n"
-    "✘Size: {Size}\n"
-    "✘Seeders: {Seeders} || ✘Leechers: {Leechers}"
+    "📀Name: `{Name}`\n"
+    "🌀Size: {Size}\n"
+    "🌱Seeders: {Seeders} || ✘Leechers: {Leechers}"
 )
 RESULT_STR_PIRATEBAY = (
     "➲Name: `{Name}`\n"
@@ -298,13 +295,13 @@ RESULT_STR_TGX = (
     "⇒Seeders: {Seeders} || ⇒Leechers: {Leechers}"
 )
 RESULT_STR_YTS = (
-    "❂Name: `{Name}`\n"
-    "❂Released on: {ReleasedDate}\n"
-    "❂Genre: {Genre}\n"
-    "❂Rating: {Rating}\n"
-    "❂Likes: {Likes}\n"
-    "❂Duration: {Runtime}\n"
-    "❂Language: {Language}"
+    "📀 Name: `{Name}`\n"
+    "🌀 Released on: {ReleasedDate}\n"
+    "👣 Genre: {Genre}\n"
+    "⭐ Rating: {Rating}\n"
+    "💌 Likes: {Likes}\n"
+    "⏳ Duration: {Runtime}\n"
+    "🍂 Language: {Language}"
 )
 RESULT_STR_EZTV = (
     "★Name: `{Name}`\n"
@@ -317,9 +314,11 @@ RESULT_STR_TORLOCK = (
     "✿Seeders: {Seeders} || ✿Leechers: {Leechers}"
 )
 RESULT_STR_RARBG = (
-    "⊗Name: `{Name}`\n"
-    "⊗Size: {Size}\n"
-    "⊗Seeders: {Seeders} || ⊗Leechers: {Leechers}"
+    "📀 Name: `{Name}`\n"
+    "🌀 Size: {Size}\n"
+    "🌱 Seeders: {Seeders} || ⊗Leechers: {Leechers}\n"
+    "🧲 File Url: {Url}\n"
+    "Sorry ! Magnet Not Found.\n\n<i>Note: Use Vpn to Open Above Link</i>"
 )
 RESULT_STR_ALL = (
     "❖Name: `{Name}`\n"
@@ -359,11 +358,6 @@ async def searchhelp(self, message):
 ┃• /rarbg <i>[search query]</i>
 ┃• /ts <i>[search query]</i>
 ┃
-┗━♦️ℙ𝕠𝕨𝕖𝕣𝕖𝕕 𝔹𝕪 @FuZionX♦️━╹
+┗━♦️ℙ𝕠𝕨𝕖𝕣𝕖𝕕 𝔹𝕪 Sadie♦️━╹
 '''
-    await message.reply(help_string, parse_mode=enums.ParseMode.HTML)
-    #sendMessage(help_string, context.bot, update)
-    
-    #& CustomFilters.mirror_owner_filter Not Used 😉
-tshelp_handler = CommandHandler(BotCommands.TsHelpCommand, searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-dispatcher.add_handler(tshelp_handler)
+    await message.reply(text=help_string, parse_mode=enums.ParseMode.HTML)
