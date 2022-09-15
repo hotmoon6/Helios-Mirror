@@ -365,5 +365,5 @@ async def searchhelp(self, message):
     #sendMessage(help_string, context.bot, update)
     
     #& CustomFilters.mirror_owner_filter Not Used 😉
-SEARCHHELP_HANDLER = CommandHandler(BotCommands.TsHelpCommand, searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user), run_async=True)
-dispatcher.add_handler(SEARCHHELP_HANDLER)
+tshelp_handler = CommandHandler(BotCommands.TsHelpCommand, searchhelp, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+dispatcher.add_handler(tshelp_handler)
