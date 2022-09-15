@@ -18,6 +18,7 @@ from .helper.telegram_helper.button_build import ButtonMaker
 
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror_leech, clone, ytdlp, shell, eval, delete, count, leech_settings, search, rss, bt_select, sleep
 from .helper.ext_utils.telegraph_helper import telegraph
+from bot.modules.torrent_search import searchhelp
 
 def progress_bar(percentage):
     p_used = '⬢'
