@@ -153,9 +153,9 @@ def update_all_messages(force=False):
                 status_reply_dict[chat_id][0].text = msg
                 status_reply_dict[chat_id][1] = time()
 
-def sendStatusMessage(msg, bot, update):
+def sendStatusMessage(msg, bot):
     Pic = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
-    progress, buttons, update = get_readable_message()
+    progress, buttons = get_readable_message()
     if progress is None:
         return
     with status_reply_dict_lock:
