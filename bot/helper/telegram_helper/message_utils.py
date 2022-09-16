@@ -164,7 +164,7 @@ def sendStatusMessage(msg, bot, update):
             deleteMessage(bot, message)
             del status_reply_dict[msg.chat.id]
         if buttons == "":
-            message = sendMessage(progress, bot, msg, Pic, update.message)
+            message = sendPhoto(progress, bot, msg, Pic, update.message)
         else:
             message = sendMessage(progress, bot, msg, buttons, Pic, update.message)
         status_reply_dict[msg.chat.id] = [message, time()]
