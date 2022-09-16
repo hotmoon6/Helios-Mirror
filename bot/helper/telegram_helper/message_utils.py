@@ -155,7 +155,7 @@ def update_all_messages(force=False):
 
 def sendStatusMessage(msg, bot, update):
     Pic = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
-    progress, buttons = get_readable_message()
+    progress, buttons, update = get_readable_message()
     if progress is None:
         return
     with status_reply_dict_lock:
