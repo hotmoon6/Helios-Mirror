@@ -21,16 +21,16 @@ PAGE_NO = 1
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "Uploading..."
-    STATUS_DOWNLOADING = "Downloading..."
-    STATUS_CLONING = "Cloning..."
-    STATUS_WAITING = "Queue"
-    STATUS_PAUSED = "Pause"
-    STATUS_ARCHIVING = "Archiving..."
-    STATUS_EXTRACTING = "Extracting..."
-    STATUS_SPLITTING = "Spliting.."
-    STATUS_CHECKING = "CheckUp"
-    STATUS_SEEDING = "Seeding..."
+    STATUS_UPLOADING = "🔺Uploading..."
+    STATUS_DOWNLOADING = "🔻Downloading..."
+    STATUS_CLONING = "👣Cloning..."
+    STATUS_WAITING = "⏳Queue"
+    STATUS_PAUSED = "⏸️Pause"
+    STATUS_ARCHIVING = "☢️Archiving..."
+    STATUS_EXTRACTING = "☣️Extracting..."
+    STATUS_SPLITTING = "✴️Spliting.."
+    STATUS_CHECKING = "🔆CheckUp"
+    STATUS_SEEDING = "🌱Seeding..."
 class EngineStatus:
     STATUS_ARIA = "Aria2c v1.36.0"
     STATUS_GD = "Google-Api v2.50.0"
@@ -146,7 +146,7 @@ def get_readable_message():
                 globals()['COUNT'] -= STATUS_LIMIT
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
-            msg += f"\n\n\n<b>File Name:</b> <code>{escape(str(download.name()))}</code>"
+            msg += f"\n\n<b>File Name:</b> <code>{escape(str(download.name()))}</code>"
             msg += f"\n<b>Status:</b> <i>{download.status()}</i> \n<b>Engine:</b> {download.eng()}"
             if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
                 msg += f"\n{get_progress_bar_string(download)} ↣ <code>{download.progress()}</code>"
@@ -196,7 +196,7 @@ def get_readable_message():
                     up_speed += float(spd.split('K')[0]) * 1024
                 elif 'M' in spd:
                     up_speed += float(spd.split('M')[0]) * 1048576
-        bmsg = f"\n★━━━━━━━━━━━━━━━━━━★"
+        bmsg = f"\n▱▰▱▰▱▰▱▰▱▰▱▰▱▰▱▰"
         bmsg += f"\n<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
         bmsg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - botStartTime)}"
         bmsg += f"\n<b>DL:</b> {get_readable_file_size(dl_speed)}/s | <b>UL:</b> {get_readable_file_size(up_speed)}/s"
