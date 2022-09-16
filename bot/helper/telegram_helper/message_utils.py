@@ -154,7 +154,6 @@ def update_all_messages(force=False):
                 status_reply_dict[chat_id][1] = time()
 
 def sendStatusMessage(msg, bot):
-    Pic = 'https://graph.org/file/cbff456bdf713dbc94e77.jpg'
     progress, buttons = get_readable_message()
     if progress is None:
         return
@@ -164,9 +163,9 @@ def sendStatusMessage(msg, bot):
             deleteMessage(bot, message)
             del status_reply_dict[msg.chat.id]
         if buttons == "":
-            message = sendMessage(Pic, progress, bot, msg, update.message)
+            message = sendMessage(progress, bot, msg)
         else:
-            message = sendMessage(Pic, progress, bot, msg, buttons, update.message)
+            message = sendMarkup(progress, bot, msg, buttons)
         status_reply_dict[msg.chat.id] = [message, time()]
         if not Interval:
             Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
