@@ -1,13 +1,11 @@
 from psutil import cpu_percent, virtual_memory, disk_usage
-from time import time, sleep
+from time import time
 from threading import Thread
 from telegram.ext import CommandHandler, CallbackQueryHandler
 
-from bot import dispatcher, status_reply_dict, status_reply_dict_lock, \
-                download_dict, download_dict_lock, botStartTime, DOWNLOAD_DIR, \
-                OWNER_ID, Interval, DOWNLOAD_STATUS_UPDATE_INTERVAL, PICS
-from bot.helper.telegram_helper.message_utils import sendMessage, deleteMessage, auto_delete_message, sendStatusMessage, update_all_messages, delete_all_messages, editMessage, editCaption 
-from bot.helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time, turn, pop_up_stats, setInterval, new_thread
+from bot import dispatcher, status_reply_dict, status_reply_dict_lock, download_dict, download_dict_lock, botStartTime, DOWNLOAD_DIR, Interval, DOWNLOAD_STATUS_UPDATE_INTERVAL
+from bot.helper.telegram_helper.message_utils import sendMessage, deleteMessage, auto_delete_message, sendStatusMessage, update_all_messages
+from bot.helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time, turn, setInterval
 from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 
@@ -24,9 +22,11 @@ def mirror_status(update, context):
         reply_message = sendMessage(message, context.bot, update.message)
         Thread(target=auto_delete_message, args=(context.bot, update.message, reply_message)).start()
     else:
-        sendStatusMessage(update.message, context.bot)
-        deleteMessage(context.bot, update.message)
+        index = update.effective_chat.id
         with status_reply_dict_lock:
+            if index in status_reply_dict:
+                deleteMessage(context.bot, status_reply_dict[index][0])
+                del status_reply_dict[index]
             try:
                 if Interval:
                     Interval[0].cancel()
@@ -35,6 +35,8 @@ def mirror_status(update, context):
                 pass
             finally:
                 Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
+        sendStatusMessage(update.message, context.bot)
+        deleteMessage(context.bot, update.message)
 
 @new_thread
 def status_pages(update, context):
@@ -47,8 +49,7 @@ def status_pages(update, context):
     data = query.data
     data = data.split()
     if data[1] == "refresh":
-        if PICS: editCaption(f"{user_name}, Refreshing Status...", msg)
-        else: editMessage(f"{user_name}, Refreshing Status...", msg)
+        editMessage(f"{user_name}, Refreshing Status...", msg)
         sleep(2)
         update_all_messages()
         query.answer()
@@ -68,7 +69,6 @@ def status_pages(update, context):
         query.answer()
     else:
         msg.delete()
-
 
 mirror_status_handler = CommandHandler(BotCommands.StatusCommand, mirror_status,
                                        filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
