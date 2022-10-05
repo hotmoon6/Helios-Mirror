@@ -65,7 +65,7 @@ def start(update, context):
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         Pic = ["https://graph.org/file/cbff456bdf713dbc94e77.jpg", "https://graph.org/file/49cf3d82dbf56af26deab.jpg", "https://graph.org/file/9e25a56f41522f8d1dcd6.jpg", "https://graph.org/file/2e179e25dc47dce3eb415.jpg", "https://graph.org/file/d171fa983d64db4e8345b.jpg", "https://graph.org/file/266fded681ee390e59d89.jpg"]
         start_string = f'''<b>My Name is Vecna ! An Pyrogram Based Mirror | Leech Telegram Bot to Upload Torrent or Direct Links to GDrive...</b>
-<b>Tap /{BotCommands.MirrorCommand} to get a list of available commands.</b>
+<b>Tap /{BotCommands.HelpCommand} to get a list of available commands.</b>
 
 <b>© Spidey | Mindflayer's Mirror</b>
 '''
