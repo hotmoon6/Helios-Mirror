@@ -69,9 +69,12 @@ def start(update, context):
 
 <b>© Spidey | Mindflayer's Mirror</b>
 '''
+        unstart_string = f'''<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>
+
+<b>NOTE:</b> <code>All The Uploaded Links And Files Will Be Sent Here In Your Private Chat</code>'''
         sendPhoto(start_string, context.bot, update.message, random.choice(Pic))
     else:
-        sendPhoto("<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>", context.bot, update.message, random.choice(Pic))
+        sendPhoto(unstart_string, context.bot, update.message, random.choice(Pic))
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
