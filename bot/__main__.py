@@ -69,9 +69,9 @@ def start(update, context):
 
 <b>© Spidey | Mindflayer's Mirror</b>
 '''
-        update.message.reply_photo(photo=random.choice(Pic), caption = start_string)
+        sendPhoto(start_string, context.bot, update.message, random.choice(PICS))
     else:
-        sendMarkup("You're Not an Authorized!", context.bot, update.message)
+        sendPhoto("<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>", context.bot, update.message, random.choice(PICS))
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
