@@ -208,7 +208,6 @@ def get_readable_message():
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
             msg += f"<b>Tasks:</b> {tasks}\n"
             buttons = ButtonMaker()
-            if EMOJI_THEME is True:
                 buttons.sbutton("⏪Previous", "status pre")
                 buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(THREE))
                 buttons.sbutton("Next⏩", "status nex")
