@@ -64,11 +64,10 @@ def stats(update, context):
 def start(update, context):
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         Pic = ["https://graph.org/file/cbff456bdf713dbc94e77.jpg", "https://graph.org/file/49cf3d82dbf56af26deab.jpg", "https://graph.org/file/9e25a56f41522f8d1dcd6.jpg", "https://graph.org/file/2e179e25dc47dce3eb415.jpg", "https://graph.org/file/d171fa983d64db4e8345b.jpg", "https://graph.org/file/266fded681ee390e59d89.jpg"]
-        start_string = f'''
-Wᴇʟᴄᴏᴍᴇ | Vᴇᴄɴᴀ ɪs ʀᴇᴀᴅʏ ғᴏʀ ʏᴏᴜ !
-ɪ ʜᴀᴠᴇ ᴛʜᴇ Aʙɪʟɪᴛʏ ᴛᴏ ᴍɪʀʀᴏʀ Tᴏʀʀᴇɴᴛ, ʟɪɴᴋs ᴀɴᴅ Uᴘʟᴏᴀᴅ ᴅɪʀᴇᴄᴛʟʏ ᴛᴏ Gᴅʀɪᴠᴇ ᴀᴘɪ
+        start_string = f'''My Name is Vecna ! An Pyrogram Based Mirror | Leech Telegram Bot to Upload Torrent or Direct Links to GDrive...
+Tap <b>/{BotCommands.MirrorCommand}</b> to get a list of available commands
 
-Cʀᴇᴀᴛᴏʀ :- Sᴘɪᴅᴇʏ⭐
+© Spidey | Mindflayer's Mirror
 '''
         update.message.reply_photo(photo=random.choice(Pic), caption = start_string)
     else:
@@ -157,7 +156,27 @@ NOTE: Try each command without any perfix to see more detalis.<br><br>
 <b>/{BotCommands.RssSettingsCommand}</b>[query]: Rss Settings (Only Owner & Sudo).<br><br>
 '''
 help_string = f'''
-Hei, Need Help!!
+Basic Commands :-
+
+<b>NOTE: After the Command Leave a single Space</b>
+
+/mirror2: [url] Start mirroring to Google Drive.
+
+<code>/mirror2 https://yoururl.com</code>
+
+or (Reply with URL)
+
+/qbmirror2: [magnet link] or Reply with Torrent - Start Mirroring to Google Drive using qBittorrent.
+
+<code>/qbmirror2 magnet:?xt=urn:btih:f2cd08296a3...</code>
+
+or (Reply with Torrent)
+
+/clone2 [drive_url]: Copy Others file/folder to Google Drive.
+
+<code>/clone2 https://drive.google.com/file/d/1e-fy8zXyz</code>
+
+Complete Guide of Commands:-
 '''
 try:
     help = telegraph.create_page(
