@@ -7,7 +7,7 @@ from sys import executable
 from telegram.ext import CommandHandler
 import random
 from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop, AUTHORIZED_CHATS, app_session, USER_SESSION_STRING, \
-    OWNER_ID, SUDO_USERS, START_BTN1_NAME, START_BTN1_URL, START_BTN2_NAME, START_BTN2_URL
+    OWNER_ID, SUDO_USERS, START_BTN1_NAME, START_BTN1_URL, START_BTN2_NAME, START_BTN2_URL, PICS
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.ext_utils.db_handler import DbManger
@@ -69,13 +69,13 @@ def start(update, context):
 
 <b>© Spidey | Mindflayer's Mirror</b>
 '''
-        sendPhoto(start_string, context.bot, update.message, random.choice(Pic))
+        sendPhoto(start_string, context.bot, update.message, random.choice(PICS))
     else:
         text = f'''<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>
 
 <b>NOTE:</b> <code>All The Uploaded Links And Files Will Be Sent Here In Your Private Chat</code>
 '''
-        sendPhoto(text, context.bot, update.message, random.choice(Pic))
+        sendPhoto(text, context.bot, update.message, random.choice(PICS))
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
