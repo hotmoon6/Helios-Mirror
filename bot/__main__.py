@@ -64,10 +64,10 @@ def stats(update, context):
 def start(update, context):
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         Pic = ["https://graph.org/file/cbff456bdf713dbc94e77.jpg", "https://graph.org/file/49cf3d82dbf56af26deab.jpg", "https://graph.org/file/9e25a56f41522f8d1dcd6.jpg", "https://graph.org/file/2e179e25dc47dce3eb415.jpg", "https://graph.org/file/d171fa983d64db4e8345b.jpg", "https://graph.org/file/266fded681ee390e59d89.jpg"]
-        start_string = f'''<b>My Name is Vecna ! An Pyrogram Based Mirror | Leech Telegram Bot to Upload Torrent or Direct Links to GDrive...
-Tap /{BotCommands.MirrorCommand} to get a list of available commands
+        start_string = f'''<b>My Name is Vecna ! An Pyrogram Based Mirror | Leech Telegram Bot to Upload Torrent or Direct Links to GDrive...</b>
+<b>Tap /{BotCommands.MirrorCommand} to get a list of available commands.</b>
 
-© Spidey | Mindflayer's Mirror</b>
+<b>© Spidey | Mindflayer's Mirror</b>
 '''
         update.message.reply_photo(photo=random.choice(Pic), caption = start_string)
     else:
@@ -200,9 +200,9 @@ def main():
                 if ospath.isfile(".restartmsg"):
                     with open(".restartmsg") as f:
                         chat_id, msg_id = map(int, f)
-                    msg = "It's Time!"
+                    msg = "Bot Restarted!"
                 else:
-                    msg = "It's Time!"
+                    msg = "Bot Restarted!"
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):
@@ -229,7 +229,7 @@ def main():
     if ospath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f)
-        bot.edit_message_text("It's Time!", chat_id, msg_id)
+        bot.edit_message_text("Bot Restarted!", chat_id, msg_id)
         osremove(".restartmsg")
     elif not notifier_dict and AUTHORIZED_CHATS:
         for id_ in AUTHORIZED_CHATS:
