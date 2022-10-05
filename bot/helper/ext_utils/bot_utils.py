@@ -201,15 +201,26 @@ def get_readable_message():
         bmsg += f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - botStartTime)}"
         bmsg += f"\n<b>DL:</b> {get_readable_file_size(dl_speed)}/s | <b>UL:</b> {get_readable_file_size(up_speed)}/s"
         buttons = ButtonMaker()
+        buttons.sbutton("Refresh", "status refresh")
         buttons.sbutton("Statistics", str(FOUR))
-        sbutton = buttons.build_menu(1)
+        buttons.sbutton("Close", "status close")
+        sbutton = buttons.build_menu(3)
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
-            msg += f"<b>Page:</b> {PAGE_NO}/{pages} | <b>Tasks:</b> {tasks}\n"
+            msg += f"<b>Tasks:</b> {tasks}\n"
             buttons = ButtonMaker()
-            buttons.sbutton("Previous", "status pre")
-            buttons.sbutton("Next", "status nex")
-            buttons.sbutton("Statistics", str(FOUR))
-            button = buttons.build_menu(2)
+            if EMOJI_THEME is True:
+                buttons.sbutton("⏪Previous", "status pre")
+                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton("Next⏩", "status nex")
+                buttons.sbutton("Refresh", "status refresh")
+                buttons.sbutton("Close", "status close")
+            else:
+                buttons.sbutton("Previous", "status pre")
+                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton("Next", "status nex")
+                buttons.sbutton("Refresh", "status refresh")
+                buttons.sbutton("Close", "status close")
+            button = buttons.build_menu(3)
             return msg + bmsg, button
         return msg + bmsg, sbutton
 
