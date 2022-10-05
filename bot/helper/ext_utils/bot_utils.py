@@ -370,5 +370,5 @@ Made with ❤️ by SPIDEY⭐
 """
     return stats
 dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern="^" + str(THREE) + "$")
+    CallbackQueryHandler(pop_up_stats, pattern="^" + str(FOUR) + "$")
 )
