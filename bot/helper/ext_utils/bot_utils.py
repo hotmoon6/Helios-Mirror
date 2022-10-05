@@ -210,13 +210,13 @@ def get_readable_message():
             buttons = ButtonMaker()
             if EMOJI_THEME is True:
                 buttons.sbutton("⏪Previous", "status pre")
-                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton(f"{PAGE_NO}/{pages}", str(FOUR))
                 buttons.sbutton("Next⏩", "status nex")
                 buttons.sbutton("Refresh", "status refresh")
                 buttons.sbutton("Close", "status close")
             else:
                 buttons.sbutton("Previous", "status pre")
-                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton(f"{PAGE_NO}/{pages}", str(FOUR))
                 buttons.sbutton("Next", "status nex")
                 buttons.sbutton("Refresh", "status refresh")
                 buttons.sbutton("Close", "status close")
