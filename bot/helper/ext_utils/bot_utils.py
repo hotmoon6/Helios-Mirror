@@ -202,7 +202,7 @@ def get_readable_message():
         bmsg += f"\n<b>DL:</b> {get_readable_file_size(dl_speed)}/s | <b>UL:</b> {get_readable_file_size(up_speed)}/s"
         buttons = ButtonMaker()
         buttons.sbutton("Refresh", "status refresh")
-        buttons.sbutton("Statistics", str(FOUR))
+        buttons.sbutton("Statistics", str(THREE))
         buttons.sbutton("Close", "status close")
         sbutton = buttons.build_menu(3)
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
@@ -210,13 +210,13 @@ def get_readable_message():
             buttons = ButtonMaker()
             if EMOJI_THEME is True:
                 buttons.sbutton("⏪Previous", "status pre")
-                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(THREE))
                 buttons.sbutton("Next⏩", "status nex")
                 buttons.sbutton("Refresh", "status refresh")
                 buttons.sbutton("Close", "status close")
             else:
                 buttons.sbutton("Previous", "status pre")
-                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(FOUR))
+                buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(THREE))
                 buttons.sbutton("Next", "status nex")
                 buttons.sbutton("Refresh", "status refresh")
                 buttons.sbutton("Close", "status close")
@@ -317,7 +317,7 @@ def get_content_type(link: str) -> str:
             content_type = None
     return content_type
 
-ONE, TWO, THREE, FOUR = range(4)
+ONE, TWO, THREE = range(3)
 def pop_up_stats(update, context):
     query = update.callback_query
     stats = bot_sys_stats()
@@ -377,5 +377,5 @@ Made with ❤️ by SPIDEY⭐
 """
     return stats
 dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern="^" + str(FOUR) + "$")
+    CallbackQueryHandler(pop_up_stats, pattern="^" + str(THREE) + "$")
 )
