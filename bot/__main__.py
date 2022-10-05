@@ -69,9 +69,9 @@ def start(update, context):
 
 <b>© Spidey | Mindflayer's Mirror</b>
 '''
-        sendPhoto(start_string, context.bot, update.message, random.choice(PICS))
+        sendPhoto(start_string, context.bot, update.message, random.choice(Pic))
     else:
-        sendPhoto("<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>", context.bot, update.message, random.choice(PICS))
+        sendPhoto("<b>It is an Official Bot of Mindflayer's Mirror. You can get Access only within the Group!</b>", context.bot, update.message, random.choice(Pic))
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
@@ -234,7 +234,7 @@ def main():
     elif not notifier_dict and AUTHORIZED_CHATS:
         for id_ in AUTHORIZED_CHATS:
             try:
-                bot.sendMessage(id_, "It's Time!", 'HTML')
+                bot.sendMessage(id_, "Bot Restarted!", 'HTML')
             except Exception as e:
                 LOGGER.error(e)
 
