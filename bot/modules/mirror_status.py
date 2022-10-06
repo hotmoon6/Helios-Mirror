@@ -36,7 +36,7 @@ def mirror_status(update, context):
             finally:
                 Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
 
-
+@new_thread
 def status_pages(update, context):
     query = update.callback_query
     msg = query.message
