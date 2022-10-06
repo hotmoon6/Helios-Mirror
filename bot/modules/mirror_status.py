@@ -38,7 +38,6 @@ def mirror_status(update, context):
         sendStatusMessage(update.message, context.bot)
         deleteMessage(context.bot, update.message)
 
-@new_thread
 def status_pages(update, context):
     query = update.callback_query
     msg = query.message
