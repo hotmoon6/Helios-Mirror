@@ -6,7 +6,7 @@ from telegram.ext import CommandHandler, CallbackQueryHandler
 from bot import dispatcher, status_reply_dict, status_reply_dict_lock, \
                 download_dict, download_dict_lock, botStartTime, DOWNLOAD_DIR, \
                 OWNER_ID, Interval, DOWNLOAD_STATUS_UPDATE_INTERVAL, PICS
-from bot.helper.telegram_helper.message_utils import sendMessage, deleteMessage, auto_delete_message, sendStatusMessage, update_all_messages, delete_all_messages, editMessage, editCaption 
+from bot.helper.telegram_helper.message_utils import sendMessage, deleteMessage, auto_delete_message, sendStatusMessage, update_all_messages, delete_all_messages, editMessage 
 from bot.helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time, turn, pop_up_stats, setInterval, new_thread
 from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
