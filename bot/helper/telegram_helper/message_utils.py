@@ -1,3 +1,4 @@
+from random import choice
 from time import sleep, time
 from telegram import InlineKeyboardMarkup
 from telegram.message import Message
@@ -6,7 +7,8 @@ from pyrogram.errors import FloodWait
 from os import remove
 
 from bot import AUTO_DELETE_MESSAGE_DURATION, LOGGER, status_reply_dict, status_reply_dict_lock, \
-                Interval, DOWNLOAD_STATUS_UPDATE_INTERVAL, RSS_CHAT_ID, bot, rss_session, AUTO_DELETE_UPLOAD_MESSAGE_DURATION
+                Interval, DOWNLOAD_STATUS_UPDATE_INTERVAL, RSS_CHAT_ID, bot, rss_session, \
+                AUTO_DELETE_UPLOAD_MESSAGE_DURATION, PICS
 from bot.helper.ext_utils.bot_utils import get_readable_message, setInterval
 
 
@@ -54,6 +56,18 @@ def editMessage(text: str, message: Message, reply_markup=None):
         bot.editMessageText(text=text, message_id=message.message_id,
                               chat_id=message.chat.id,reply_markup=reply_markup,
                               parse_mode='HTML', disable_web_page_preview=True)
+    except RetryAfter as r:
+        LOGGER.warning(str(r))
+        sleep(r.retry_after * 1.5)
+        return editMessage(text, message, reply_markup)
+    except Exception as e:
+        LOGGER.error(str(e))
+        return str(e)
+
+def editCaption(text: str, message: Message, reply_markup=None):
+    try:
+        bot.edit_message_caption(chat_id=message.chat.id, message_id=message.message_id, caption=text, 
+                              reply_markup=reply_markup, parse_mode='HTML')
     except RetryAfter as r:
         LOGGER.warning(str(r))
         sleep(r.retry_after * 1.5)
