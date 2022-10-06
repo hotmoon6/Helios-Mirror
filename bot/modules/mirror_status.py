@@ -49,7 +49,8 @@ def status_pages(update, context):
     admins = context.bot.get_chat_member(chat_id, user_id).status in ['creator', 'administrator'] or user_id in [OWNER_ID]
     data = query.data
     data = data.split()
-    if PICS: editCaption(f"{user_name}, Refreshing Status...", msg)
+    if data[1] == "refresh":
+        if PICS: editCaption(f"{user_name}, Refreshing Status...", msg)
         else: editMessage(f"{user_name}, Refreshing Status...", msg)
         sleep(2)
         update_all_messages()
