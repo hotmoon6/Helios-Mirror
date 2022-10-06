@@ -24,11 +24,9 @@ def mirror_status(update, context):
         reply_message = sendMessage(message, context.bot, update.message)
         Thread(target=auto_delete_message, args=(context.bot, update.message, reply_message)).start()
     else:
-        index = update.effective_chat.id
+        sendStatusMessage(update.message, context.bot)
+        deleteMessage(context.bot, update.message)
         with status_reply_dict_lock:
-            if index in status_reply_dict:
-                deleteMessage(context.bot, status_reply_dict[index][0])
-                del status_reply_dict[index]
             try:
                 if Interval:
                     Interval[0].cancel()
@@ -37,8 +35,7 @@ def mirror_status(update, context):
                 pass
             finally:
                 Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
-        sendStatusMessage(update.message, context.bot)
-        deleteMessage(context.bot, update.message)
+
 
 def status_pages(update, context):
     query = update.callback_query
