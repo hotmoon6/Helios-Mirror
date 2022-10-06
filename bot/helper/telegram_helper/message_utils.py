@@ -158,7 +158,7 @@ def delete_all_messages():
 
 def update_all_messages(force=False):
     with status_reply_dict_lock:
-        if not force and (not status_reply_dict or not Interval or time() - list(status_reply_dict.values())[0][1] < 3):
+        if not status_reply_dict or not Interval or (not force and time() - list(status_reply_dict.values())[0][1] < 3):
             return
         for chat_id in status_reply_dict:
             status_reply_dict[chat_id][1] = time()
@@ -169,8 +169,12 @@ def update_all_messages(force=False):
     with status_reply_dict_lock:
         for chat_id in status_reply_dict:
             if status_reply_dict[chat_id] and msg != status_reply_dict[chat_id][0].text:
-                if buttons == "":
+                if buttons == "" and PICS:
+                    rmsg = editCaption(msg, status_reply_dict[chat_id][0])
+                elif buttons == "":
                     rmsg = editMessage(msg, status_reply_dict[chat_id][0])
+                elif PICS:
+                    rmsg = editCaption(msg, status_reply_dict[chat_id][0], buttons)
                 else:
                     rmsg = editMessage(msg, status_reply_dict[chat_id][0], buttons)
                 if rmsg == "Message to edit not found":
